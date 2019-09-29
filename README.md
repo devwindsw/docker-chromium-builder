@@ -35,3 +35,41 @@ gn gen out/Default
 autoninja -C out/Default chrome
 out/Default/chrome
 ```
+
+## Chromium for Android
+Refer to https://chromium.googlesource.com/chromium/src/+/master/docs/android_build_instructions.md
+
+Do "fetch android" instead of "fetch chromium".
+
+### Converting an existing Linux checkout
+If you have an existing Linux checkout, you can add Android support by appending target_os = ['android'] to your .gclient file (in the directory above src):
+```
+echo "target_os = [ 'android' ]" >> ../.gclient
+```
+Then run gclient sync to pull the new Android dependencies:
+```
+gclient sync
+```
+
+### Install additional build dependencies
+Once you have checked out the code, run
+```
+build/install-build-deps-android.sh
+```
+
+### Setting up the build
+Run 
+```
+gn args out/Default 
+```
+
+and edit the file to contain the following arguments:
+```
+target_os = "android"
+target_cpu = "arm64"  # or "arm"
+```
+
+### Build
+```
+autoninja -C out/Default chrome_public_apk
+```
