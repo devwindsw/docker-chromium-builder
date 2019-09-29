@@ -78,3 +78,11 @@ RUN apt-get -y install bsdiff
 RUN apt-get -y install openjdk-8-jre openjdk-8-jdk
 
 RUN apt-get -y install vim
+
+RUN useradd -ms /bin/bash devwindsw
+USER devwindsw
+ENV HOME /home/devwindsw
+
+RUN ln -sf /chromium/chromium /home/devwindsw/chromium
+
+WORKDIR /home/devwindsw
